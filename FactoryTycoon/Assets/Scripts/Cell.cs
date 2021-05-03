@@ -4,57 +4,43 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class Cell : MonoBehaviour
+//Ячейка только для чтения. Если нужно изменить значение ячейки ячейку нужно пересоздать
+
+
+public class Cell : MonoBehaviour 
 {
-    public float? value;
-    Formula formula;
-    public string id;
+    public void Start()
+    {
+        var example1 = new Formula(6).Plus(10).Divide(20).Multiply(new Formula(15).Plus(15)).Divide(15);
+        print($"The result of example1 is {example1.Calculate()}");
+
+        var example2 = new Formula().Sum(new float[] {1, 2, 3, 4, 5}); //return float
+        print($"The result of example2 is {example2}");
+
+        var example3 = new Formula(Formula.Sum(new float[] {1, 2, 3, 4})) // (1+2+3+4)*(5+6+7+8+9+10)
+                    .Multiply(Formula.Sum(new float[] {5, 6, 7, 8, 9, 10}));
+        print($"The result of example2 is {example3}");
+    }
+
+    public CellType CellType { get; }
+    public Formula Formula { get; }
+    public float? Value { get; }
+
+    public Cell(Formula formula)
+    {
+        CellType = CellType.Formula;
+        Formula = formula;
+    }
+    
+    public Cell(float value)
+    {
+        CellType = CellType.Value;
+        Value = value;
+    }
 }
 
-public class Formula
+public enum CellType
 {
-    public float? result;
-
-    List<float> coefs = new List<float>();
-    List<string> cells = new List<string>();
-    List<Operation> operations = new List<Operation>();
-
-    //public float GetResult()
-    //{
-    //    foreach(var operation in operations)
-    //    {
-    //        operation.doOperation
-    //    }
-    //}
-
-    class Operation
-    {
-        enum Func
-        {
-            Sum,
-            Multiply,
-            Division,
-        }
-
-
-
-        private float Sum(List<Cell> cells)
-        {
-            var result = 0f;
-            var values = cells.Select(cell => cell.value == null ? 0f : cell.value);
-            foreach(var num in values)
-            {
-                result += (float) num;
-            }
-            return result;
-        }
-
-        private float Multiply(float num1, float num2) => num1 * num2;
-        private float Division(float num1, float num2) => num1 / num2;
-        //public float doOperation(Func<float,float,float> operation,  )
-        //{
-
-        //}
-
-    }
+    Formula,
+    Value
 }
