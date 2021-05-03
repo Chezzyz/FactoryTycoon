@@ -18,7 +18,7 @@ public class Formula
     List<float> coefs = new List<float>();
     List<string> cells = new List<string>();
     List<Operation> operations = new List<Operation>();
-    
+
     //public float GetResult()
     //{
     //    foreach(var operation in operations)
@@ -35,10 +35,10 @@ public class Formula
             Multiply,
             Division,
         }
-        
-        
 
-        private float Sum(List<Cell> cells) 
+
+
+        private float Sum(List<Cell> cells)
         {
             var result = 0f;
             var values = cells.Select(cell => cell.value == null ? 0f : cell.value);
