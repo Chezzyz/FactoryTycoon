@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 public class Formula
 {
     private readonly List<IOperation> _operations;
-
+    public string formulaText;
     public Formula(float value)
     {
         _operations = new List<IOperation>{new Addition(0, value)};
@@ -19,8 +19,12 @@ public class Formula
     {
         _operations = operations.ToList();
     }
-    
-    
+
+    public override string ToString()
+    {
+        return formulaText;
+    }
+
     public Formula Plus(float value)
     {
         return DoOperation(value, OperationType.Addiction);        
