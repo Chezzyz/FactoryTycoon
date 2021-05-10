@@ -31,6 +31,7 @@ public class Cell : MonoBehaviour
 
     public void SetValue(InputField inputField)
     {
+        CellType = CellType.Value;
         CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
         ci.NumberFormat.CurrencyDecimalSeparator = ".";
         float value;
