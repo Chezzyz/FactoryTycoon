@@ -26,11 +26,13 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         if (cellSlot != null && cellSlot != slot) // Попали в другой слот
         {
-            var temp = slot.cardGO;
-            temp.GetComponent<DragAndDrop>().SwapCard(cellSlot);
-            //cellSlot.cardGO.Remove(this.gameObject);
+            slot.cardGO.GetComponent<DragAndDrop>().SwapCard(cellSlot);
         }
-
+        if(cellSlot == null && slot.cardGO != null)
+        {
+            slot.cardData._dragController.ReturnCardToHand();
+            slot.cardGO = gameObject;
+        }
         transform.position = slot.transform.position;
         transform.SetParent(slot.transform);
         cellSlot = slot;

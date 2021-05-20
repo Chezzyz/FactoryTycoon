@@ -8,8 +8,12 @@ using UnityEngine.EventSystems;
 public class CellSlot : MonoBehaviour, IDropHandler
 {
     public GameObject cardGO;
+    public CardData cardData => cardGO ? cardGO.GetComponent<CardData>() : null;
     //public GameObject rightFill;
     public bool rightCell = false;
+    public delegate void OnCardDrop();
+    public static event OnCardDrop OnCardDropEvent;
+    
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -19,14 +23,12 @@ public class CellSlot : MonoBehaviour, IDropHandler
             card = eventData.pointerDrag.GetComponent<DragAndDrop>();
             card.PutCardOnSlot(this);
             cardGO = eventData.pointerDrag;
+            OnCardDropEvent?.Invoke();
         }
         else
         {
             card = eventData.pointerDrag.GetComponent<DragAndDrop>();
             card.ReturnCardToHand();
-            //items.Remove(eventData.pointerDrag);
-            //Destroy(eventData.pointerDrag);
-
         }
     }
 
