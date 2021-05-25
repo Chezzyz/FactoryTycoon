@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FormulaController : MonoBehaviour
+public class FormulaController : MonoBehaviour, ICheckable
 {
     [SerializeField] List<CellSlot> numeratorCellSlots = new List<CellSlot>();
     [SerializeField] List<CellSlot> denumeratorCellSlots = new List<CellSlot>();
@@ -32,7 +32,7 @@ public class FormulaController : MonoBehaviour
         HashSet<string> set = new HashSet<string>(list.Select(card => card._name));
         return set;
     }
-    private void CheckAnswer()
+    public bool CheckAnswer()
     {
         numeratorSet.Clear();
         denumeratorSet.Clear();
@@ -44,8 +44,7 @@ public class FormulaController : MonoBehaviour
         var denumCheck = denumeratorSet.SetEquals(correctDenumeratorSet);
         var sumCheck = sumSet.SetEquals(correctSumSet);
 
-        print(numCheck && denumCheck && sumCheck);
-           
+        return numCheck && denumCheck && sumCheck;
     }
 
     private void FillSets()

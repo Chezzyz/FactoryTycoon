@@ -11,7 +11,7 @@ public class CellSlot : MonoBehaviour, IDropHandler
     public CardData cardData => cardGO ? cardGO.GetComponent<CardData>() : null;
     //public GameObject rightFill;
     public bool rightCell = false;
-    public delegate void OnCardDrop();
+    public delegate bool OnCardDrop();
     public static event OnCardDrop OnCardDropEvent;
     
 
