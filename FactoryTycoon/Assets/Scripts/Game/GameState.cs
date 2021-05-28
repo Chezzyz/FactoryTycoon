@@ -9,6 +9,8 @@ public class GameState : MonoBehaviour
     private int currentGoal = 1;
     private int currentTable = 1;
 
+    public int _currentLevel = 0;
+
     private void Awake()
     {
         if (!singleton)
@@ -16,6 +18,8 @@ public class GameState : MonoBehaviour
             singleton = this;
         }
         DontDestroyOnLoad(singleton);
+
+        SceneLoader.OnLevelEnterEvent += SetLevelNumber;
     }
 
     public void IncrementGoalNumber()
@@ -38,5 +42,9 @@ public class GameState : MonoBehaviour
         currentTable++;
     }
 
-    
+    public void SetLevelNumber(int level)
+    {
+        singleton._currentLevel = level;
+    }
+
 }

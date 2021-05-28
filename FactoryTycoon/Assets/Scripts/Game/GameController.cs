@@ -13,11 +13,17 @@ public class GameController : MonoBehaviour
             singleton = this;
             DontDestroyOnLoad(singleton.gameObject);
         }
+            
+        SetHelper();
     }
 
     void Start()
     {
-        GameHelper.SetHelperList(HelperTexts.level_1);
-        GameHelper.GetSingleton().ShowHelper(); 
+    }
+
+    private static void SetHelper()
+    {
+        GameHelper.SetHelperList(HelperTexts.allTexts[GameState.singleton._currentLevel]);
+        GameHelper.GetSingleton().ShowHelper();
     }
 }
