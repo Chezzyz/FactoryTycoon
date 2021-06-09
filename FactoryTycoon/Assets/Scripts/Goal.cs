@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Goal : MonoBehaviour
 {
     [SerializeField] GameObject checkableProperty;
     [SerializeField] int table;
     [SerializeField] bool lastGoal;
-    private Image _checkImage;
+    [SerializeField] GameObject discription;
+    [SerializeField] TextMeshProUGUI goalText;
+    [SerializeField] Goal nextGoal;
 
+    private Image _checkImage;
+    private Button _button => GetComponent<Button>();
+    public delegate void OnEndGoal(bool last);
+    public static event OnEndGoal OnEndGoalEvent;
+    
     private void Start()
     {
         _checkImage = GetComponentsInChildren<Image>()[1];   //second after background
@@ -25,15 +33,18 @@ public class Goal : MonoBehaviour
     {
         if(CheckProperty())
         {
+            OnEndGoalEvent?.Invoke(lastGoal);
+
             //CheckImage = GreenCheckImage
             _checkImage.color = new Color(0.6f, 1f, 0.6f);
-            GameState.singleton.IncrementGoalNumber();
+            goalText.color = new Color(0.5f, 0.5f, 0.5f);
+            goalText.fontStyle = FontStyles.Superscript;
 
-            if (lastGoal)  //change to new table goals
-            {            
-                GameState.singleton.IncrementTableNumber();
-                GameState.singleton.SetGoalNumber(1);
-            }
+            discription.SetActive(false);
+
+            _button.interactable = false;
+
+            if(!lastGoal) nextGoal._button.interactable = true;
         }
     }
 

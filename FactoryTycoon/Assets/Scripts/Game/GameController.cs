@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController singleton;
+    public static GameState gameState;
 
     private void Awake()
     {
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviour
             singleton = this;
             DontDestroyOnLoad(singleton.gameObject);
         }
-            
+        
         SetHelper();
     }
 

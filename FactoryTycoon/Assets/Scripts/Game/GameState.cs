@@ -6,8 +6,8 @@ public class GameState : MonoBehaviour
 {
     public static GameState singleton;
 
-    private int currentGoal = 1;
-    private int currentTable = 1;
+    private int _currentGoal = 1;
+    private int _currentTable = 1;
 
     public int _currentLevel = 0;
 
@@ -20,31 +20,44 @@ public class GameState : MonoBehaviour
         DontDestroyOnLoad(singleton);
 
         SceneLoader.OnLevelEnterEvent += SetLevelNumber;
+        Goal.OnEndGoalEvent += OnEndGoal;
     }
 
     public void IncrementGoalNumber()
     {
-        currentGoal++;
+        _currentGoal++;
     }
 
     public void SetGoalNumber(int num)
     {
-        currentGoal = num;
+        _currentGoal = num;
     }
 
-    public string GetCurrentGoalNumber()
+    public string GetCurrentGoalNumber(bool onlyNumber)
     {
-        return currentTable + "_" + currentGoal;
+        if (onlyNumber) return _currentGoal.ToString();
+        return _currentTable + "_" + _currentGoal;
     }
 
     public void IncrementTableNumber()
     {
-        currentTable++;
+        _currentTable++;
     }
 
     public void SetLevelNumber(int level)
     {
-        singleton._currentLevel = level;
+        _currentLevel = level;
+    }
+
+    private void OnEndGoal(bool lastGoal)
+    {
+        IncrementGoalNumber();
+
+        if (lastGoal)  //change to new table goals
+        {
+            IncrementTableNumber();
+            SetGoalNumber(1);
+        }
     }
 
 }

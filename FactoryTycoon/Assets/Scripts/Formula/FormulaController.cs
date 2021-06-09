@@ -32,6 +32,7 @@ public class FormulaController : MonoBehaviour, ICheckable
         HashSet<string> set = new HashSet<string>(list.Select(card => card._name));
         return set;
     }
+
     public bool CheckAnswer()
     {
         numeratorSet.Clear();
