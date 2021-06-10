@@ -12,6 +12,8 @@ public class MatchThreeController : MonoBehaviour
     {
         gridController = new GridController(fieldSize);
         gridController.CreateGrid();
+        gridController.FillGrid();
         inputController = new InputController();
+        inputController.InitService();
     }
 }

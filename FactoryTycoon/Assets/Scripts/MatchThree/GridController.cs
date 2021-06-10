@@ -5,19 +5,21 @@ using UnityEngine;
 public class GridController 
 {
     private GridService _gridService;
-    private int _fieldSize;
-
-    public List<SlotController> slots { get; private set; }
-
+    public int fieldSize;
+    public List<SlotController> slots => GridService.slots;
+    
     public GridController(int fieldSize)
     {
-        _fieldSize = fieldSize;
+        this.fieldSize = fieldSize;
         _gridService = Object.FindObjectOfType<GridService>();
-        slots = new List<SlotController>();
     }
 
     public void Swap(IMatchThreeItem first, IMatchThreeItem second) => _gridService.Swap(first, second);
 
-    public void CreateGrid() => _gridService.CreateGrid(_fieldSize, slots);
+    public void CreateGrid() => _gridService.CreateGrid(fieldSize);
+
+    public void FillGrid() => _gridService.FillGrid();
+
+    public bool IsSlotNeighborsSlots(SlotController first, SlotController second) => _gridService.IsNeighborsSlots(first, second);
 
 }

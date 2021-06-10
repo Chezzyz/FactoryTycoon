@@ -258,6 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 596041835}
   - component: {fileID: 596041834}
+  - component: {fileID: 596041836}
   m_Layer: 0
   m_Name: GAME CONTROLLER
   m_TagString: Untagged
@@ -277,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c2dd8f9a203d64684e391234a3ef84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldSize: 3
+  fieldSize: 5
 --- !u!4 &596041835
 Transform:
   m_ObjectHideFlags: 0
@@ -292,6 +293,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &596041836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596041833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbd42f4306176343b49e14e590418e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &691636526
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,6 +800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SlotPrefab: {fileID: 5062247757262937710, guid: d019e62e27c22014d82767e2bb078960, type: 3}
+  TrashPrefab: {fileID: 8544888041561572755, guid: 31308c407e1f68f468d5c7b1220bbce4, type: 3}
 --- !u!114 &1138393380
 MonoBehaviour:
   m_ObjectHideFlags: 0

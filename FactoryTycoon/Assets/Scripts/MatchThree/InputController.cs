@@ -5,8 +5,11 @@ using UnityEngine;
 public class InputController
 {
     private InputService _inputService;
-    public InputController()
+
+    public void InitService()
     {
         _inputService = new InputService();
     }
+
+
 }
