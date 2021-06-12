@@ -5,15 +5,21 @@ using UnityEngine;
 public class MatchThreeController : MonoBehaviour
 {
     [SerializeField] int fieldSize = 5;
+    [SerializeField] GridController GridController;
+    
+    //InputService InputService => GetComponent<InputService>();
 
     public static GridController gridController;
-    public static InputController inputController;
+    public static AnimationController animationController;
     void Start()
     {
-        gridController = new GridController(fieldSize);
+        gridController = GridController;
+        gridController.InitService(fieldSize);
+
         gridController.CreateGrid();
         gridController.FillGrid();
-        inputController = new InputController();
-        inputController.InitService();
+
+        animationController = GetComponent<AnimationController>();
+        animationController.InitService();
     }
 }

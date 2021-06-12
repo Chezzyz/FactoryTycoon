@@ -15,7 +15,7 @@ public class TrashController : MonoBehaviour, IMatchThreeItem, IPointerEnterHand
     public Image image => GetComponent<Image>();
     public SlotController slot => GetComponentInParent<SlotController>();
 
-    public bool selected => _trashService.selected;
+    //public bool selected => _trashService.selected;
 
     public void InitService(TrashType trashType)
     {
@@ -28,19 +28,15 @@ public class TrashController : MonoBehaviour, IMatchThreeItem, IPointerEnterHand
         _trashView.SetSpriteToImage(image);
     }
 
-    public void SelfDestroy()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void SelfDestroy() => _trashService.SelfDestroy();
 
-    public void Swap(IMatchThreeItem otherItem)
-    {
-        GridController.Swap(this, otherItem);
-    }
+    public void Swap(IMatchThreeItem otherItem) => _trashService.Swap(otherItem);
 
     public SlotController GetSlot() => slot;
 
     public GameObject GetGameObject() => gameObject;
+
+    public void FallDown() => _trashService.FallDown();
 
     public void OnPointerDown(PointerEventData eventData) => _trashService.OnPointerDown(eventData);
 

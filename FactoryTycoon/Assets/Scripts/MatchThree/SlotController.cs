@@ -17,6 +17,10 @@ public class SlotController : MonoBehaviour
         _slotService = new SlotService(x, y, this);
     }
 
-    public void SetItemController(IMatchThreeItem itemController) => _slotService.SetItemController(itemController);
-    
+    public void SetItemController(IMatchThreeItem itemController, bool deletePrevSlot = true) => _slotService.SetItemController(itemController, deletePrevSlot);
+
+    public bool IsNeighborWith(SlotController otherController) => _slotService.IsNeighborFor(otherController);
+
+    public bool IsSameTypeNeighborWith(int x, int y) => _slotService.IsSameTypeNeighborWith(x, y);
+
 }

@@ -8,7 +8,7 @@ public class InputController
 
     public void InitService()
     {
-        _inputService = new InputService();
+        //_inputService = new InputService();
     }
 
 

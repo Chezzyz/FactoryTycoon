@@ -9,9 +9,13 @@ using UnityEngine;
 public interface IMatchThreeItem
 {
     void Swap(IMatchThreeItem otherItem);
+
     SlotController GetSlot();
 
     GameObject GetGameObject();
+
+    void FallDown();
+
     void SelfDestroy();
 }
 

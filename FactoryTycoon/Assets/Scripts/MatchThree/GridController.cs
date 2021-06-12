@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridController 
+public class GridController : MonoBehaviour
 {
+    [SerializeField] GameObject SlotPrefab;
+    [SerializeField] GameObject TrashPrefab;
+    [SerializeField] GameObject SlotImage;
+    [SerializeField] public Transform GridImages;
+
     private GridService _gridService;
-    public int fieldSize;
-    public List<SlotController> slots => GridService.slots;
+
+    public int fieldSize => _gridService._fieldSize;
     
-    public GridController(int fieldSize)
+    public void InitService(int fieldSize)
     {
-        this.fieldSize = fieldSize;
-        _gridService = Object.FindObjectOfType<GridService>();
+        _gridService = new GridService(fieldSize, this, SlotPrefab, TrashPrefab, SlotImage);
     }
 
-    public void Swap(IMatchThreeItem first, IMatchThreeItem second) => _gridService.Swap(first, second);
-
-    public void CreateGrid() => _gridService.CreateGrid(fieldSize);
+    public void CreateGrid() => _gridService.CreateGrid();
 
     public void FillGrid() => _gridService.FillGrid();
 
-    public bool IsSlotNeighborsSlots(SlotController first, SlotController second) => _gridService.IsNeighborsSlots(first, second);
+    public SlotController GetSlotByPosition(int x, int y) => _gridService.GetSlotByPosition(x, y);
+
+    public bool HaveSlotAt(int x, int y) => _gridService.HaveSlotAt(x, y);
+
+    public bool HaveItemAt(int x, int y) => _gridService.HaveItemAt(x, y);
 
 }
