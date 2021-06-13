@@ -33,25 +33,64 @@ public class SlotService
         }
     }
 
-    public bool IsNeighborFor(SlotController otherSlot)
-    {
-        return Math.Abs(posX - otherSlot.posX) + Math.Abs(posY - otherSlot.posY) == 1;
-    }
-
     public bool IsSameTypeNeighborWith(int x, int y)
     {
         return
-            (x == posX || y == posY) && // on same line
             MatchThreeController.gridController.HaveSlotAt(x, y) &&
             MatchThreeController.gridController.HaveItemAt(x, y) &&
+            IsNeighborFor(x, y) &&
             IsSameTypeWith(x, y);
+    }
+
+    public bool IsNeighborFor(int x, int y)
+    {
+        return Math.Abs(posX - x) + Math.Abs(posY - y) == 1;
     }
 
     private bool IsSameTypeWith(int x, int y)
     {
-        var thisTrash = (TrashController) _slotController.TrashController;
-        var otherTrash = (TrashController)MatchThreeController.gridController.GetSlotByPosition(x, y).TrashController;
+        var thisTrash = _slotController.TrashController;
+        var otherTrash = MatchThreeController.gridController.GetSlotByPosition(x, y).TrashController;
 
-        return thisTrash.TrashType == otherTrash.TrashType;
+        if (thisTrash == null || otherTrash == null) return false;
+
+        return thisTrash.GetItemType() == otherTrash.GetItemType();
+    }
+
+    public List<SlotController> GetSameTypeNeighbors()
+    {
+        var neighborsList = new List<SlotController>();
+        for(int i = -1; i < 2; i++)
+        {
+            for(int j = -1; j < 2; j++)
+            {
+                if (IsSameTypeNeighborWith(posX + i, posY + j)) 
+                {
+                    neighborsList.Add(MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j));
+                }
+            }
+        }
+
+        return neighborsList;
+    }
+
+    public int GetNeighborsCountOfType(string type)
+    {
+        var count = 0;
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                if (IsNeighborFor(posX + i, posY + j) &&
+                    MatchThreeController.gridController.HaveSlotAt(posX + i, posY + j) &&
+                    MatchThreeController.gridController.HaveItemAt(posX + i, posY + j) &&
+                    MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j).TrashController.GetItemType() == type.ToString())
+                {
+                        count++;
+                    
+                }
+            }
+        }
+        return count;
     }
 }

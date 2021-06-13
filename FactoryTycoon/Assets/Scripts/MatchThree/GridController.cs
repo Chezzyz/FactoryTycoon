@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridController : MonoBehaviour
 {
     [SerializeField] GameObject SlotPrefab;
     [SerializeField] GameObject TrashPrefab;
     [SerializeField] GameObject SlotImage;
+    [SerializeField] public Image ReshuffleImage;
     [SerializeField] public Transform GridImages;
 
     private GridService _gridService;
 
-    public int fieldSize => _gridService._fieldSize;
+    public int fieldSize => _gridService.fieldSize;
     
     public void InitService(int fieldSize)
     {

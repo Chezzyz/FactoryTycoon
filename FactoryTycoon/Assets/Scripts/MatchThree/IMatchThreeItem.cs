@@ -8,13 +8,17 @@ using UnityEngine;
 
 public interface IMatchThreeItem
 {
-    void Swap(IMatchThreeItem otherItem);
+    void Swap(IMatchThreeItem otherItem, bool sendEvent = true);
 
     SlotController GetSlot();
 
     GameObject GetGameObject();
 
-    void FallDown();
+    string GetItemType();
+
+    void FallDown(bool isLast = false);
+
+    bool IsAbleToFall();
 
     void SelfDestroy();
 }
