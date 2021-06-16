@@ -93,4 +93,38 @@ public class SlotService
         }
         return count;
     }
+
+    public bool IsAbleToMatchBetweenSlots()
+    {
+        List<SlotController> slotControllers = new List<SlotController>();
+
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                if (!(i == 0 && j == 0) &&
+                    !IsNeighborFor(posX + i, posY + j) &&
+                    MatchThreeController.gridController.HaveSlotAt(posX + i, posY + j) &&
+                    MatchThreeController.gridController.HaveItemAt(posX + i, posY + j) &&
+                    MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j)
+                    .TrashController.GetItemType() == _slotController.TrashController.GetItemType())
+                {
+                    slotControllers.Add(MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j));
+                }
+            }
+        }
+
+        foreach (var first in slotControllers)
+        {
+            foreach (var second in slotControllers)
+            {
+                if (first.posX == second.posX || first.posY == second.posY)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

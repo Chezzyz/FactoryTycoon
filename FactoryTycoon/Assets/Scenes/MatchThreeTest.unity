@@ -154,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c2dd8f9a203d64684e391234a3ef84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldSize: 7
+  fieldSize: 5
+  CollectableCount: 3
   GridController: {fileID: 1138393379}
 --- !u!4 &596041835
 Transform:

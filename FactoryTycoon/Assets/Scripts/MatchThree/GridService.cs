@@ -59,7 +59,7 @@ public class GridService
             for (int x = 0; x < fieldSize; x++)
             {
                 var newSlot = SpawnSlot(x, y);
-                UnityEngine.Object.Instantiate(_slotImage, _gridController.GridImages);
+                newSlot.slotImage = UnityEngine.Object.Instantiate(_slotImage, _gridController.GridImages).GetComponent<Image>();
                 _slots[y,x] = newSlot;
             }
         }
@@ -111,6 +111,11 @@ public class GridService
     {
         foreach(var slot in _slots)
         {
+            if (slot.IsAbleToMatchBetweenSlots())
+            {
+                return true;
+            }
+
             var neighbors = slot.GetSameTypeNeighbors();
             if (neighbors.Count > 0)
             {

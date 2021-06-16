@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TrashService 
+public class TrashService
 {
     public TrashType _trashType { get; private set; }
 

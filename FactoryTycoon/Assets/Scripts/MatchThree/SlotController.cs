@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlotController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SlotController : MonoBehaviour
 
     private SlotService _slotService;
 
+    public Image slotImage;
     public IMatchThreeItem TrashController => _slotService.currentItemController;
     private GridController _gridController => MatchThreeController.gridController;
 
@@ -26,6 +28,8 @@ public class SlotController : MonoBehaviour
     public List<SlotController> GetSameTypeNeighbors() => _slotService.GetSameTypeNeighbors();
 
     public int GetNeighborsCountOfType(string type) => _slotService.GetNeighborsCountOfType(type);
+
+    public bool IsAbleToMatchBetweenSlots() => _slotService.IsAbleToMatchBetweenSlots();
 
     public override string ToString()
     {
