@@ -25,6 +25,9 @@ public class GridService
     public delegate void OnAction();
     public static event OnAction OnActionEvent;
 
+    public delegate void OnDestroyLines(HashSet<SlotController> slotControllers);
+    public static event OnDestroyLines OnDestroyLinesEvent;
+
     private int _fallStageIndex; 
     public GridService(int fieldSize, GridController controller, GameObject slotPrefab, GameObject trashPrefab, GameObject slotImage)
     {
@@ -232,6 +235,8 @@ public class GridService
         var destroyList = GetLinesForDestroy();
         
         if(destroyList.Count == 0) return false;
+
+        OnDestroyLinesEvent?.Invoke(destroyList);
 
         foreach (var slot in destroyList)
         {

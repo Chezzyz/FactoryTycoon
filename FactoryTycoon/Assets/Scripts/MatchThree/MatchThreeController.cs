@@ -28,4 +28,17 @@ public class MatchThreeController : MonoBehaviour
         animationController = GetComponent<AnimationController>();
         animationController.InitService();
     }
+
+    public static bool CheckAnswer()
+    {
+        return collectableCount == 0 ? true : false;
+    }
+
+    public static void CheckWin()
+    {
+        if (CheckAnswer())
+        {
+            Debug.Log("Win");
+        }
+    }
 }
