@@ -13,6 +13,7 @@ public class AnimationService
     public static event OnDestoyAnimationEnd OnAnimationDestroyEndEvent;
     public delegate void OnFallAnimationEnd(bool flag);
     public static event OnFallAnimationEnd OnAnimationFallEndEvent;
+    public static event OnFallAnimationEnd OnAnimationStateChangeEvent;
 
     public AnimationService(AnimationController controller)
     {
@@ -27,7 +28,14 @@ public class AnimationService
         animFirst.SetEase(Ease.OutQuad);
         animSecond.SetEase(Ease.OutQuad);
 
-        if(sendEvent) animSecond.OnKill(() => OnAnimationSwapEndEvent?.Invoke());
+        if (sendEvent)
+        {
+            animSecond.OnKill(() => OnAnimationSwapEndEvent?.Invoke());
+        }
+
+        animFirst.OnStart(() => OnAnimationStateChangeEvent?.Invoke(true));
+        animSecond.OnComplete(() => OnAnimationStateChangeEvent?.Invoke(false));
+
         animFirst.Play();
         animSecond.Play();
     }
@@ -38,7 +46,13 @@ public class AnimationService
 
         animation.SetEase(Ease.Linear);
 
-        if(isLast) animation.OnComplete(() => OnAnimationFallEndEvent?.Invoke(false));
+        if(isLast) animation.OnComplete(() =>
+        {
+            OnAnimationFallEndEvent?.Invoke(false);
+            OnAnimationStateChangeEvent?.Invoke(false);
+        });
+
+        animation.OnStart(() => OnAnimationStateChangeEvent?.Invoke(true));
         animation.Play();
     }
 
@@ -49,7 +63,7 @@ public class AnimationService
         animation.SetEase(Ease.OutQuad);
 
         animation.OnKill(() => OnDestroyCallBack(item));
-        
+
         animation.Play();
     }
 

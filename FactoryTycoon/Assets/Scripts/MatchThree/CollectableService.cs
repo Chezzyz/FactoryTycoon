@@ -56,10 +56,10 @@ public class CollectableService
         CreateVFX();
 
         GridService.OnDestroyLinesEvent -= TryToCollect;
-        MatchThreeController.CheckWin();
+        //MatchThreeController.CheckWin();
     }
 
-    //Лучше бы в какойй-нибудь view или animation скрипт перенести
+    //Лучше бы в какой-нибудь view или animation скрипт перенести
     private void CreateVFX()
     {
         var collectEffectPref = Resources.Load<ParticleSystem>("CollectVFX");
@@ -116,15 +116,15 @@ public class CollectableService
 
         foreach (var collectable in collectables)
         {
-            collectable.slotControllers.Select(slot => (slot.posX == x && slot.posY == y) ? isEmptySlot = false : isEmptySlot = true);
+            //collectable.slotControllers.Select(slot => isEmptySlot = (slot.posX == x && slot.posY == y) ?  false : true);
 
-            //foreach (var slot in collectable.slotControllers)
-            //{
-            //    if (slot.posX == x && slot.posY == y)
-            //    {
-            //        isEmptySlot = false;
-            //    }
-            //}
+            foreach (var slot in collectable.slotControllers)
+            {
+                if (slot.posX == x && slot.posY == y)
+                {
+                    isEmptySlot = false;
+                }
+            }
 
 
             if (!isEmptySlot)

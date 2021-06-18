@@ -14,6 +14,8 @@ public class TrashService
     public static IMatchThreeItem firstSwapped;
     public static IMatchThreeItem secondSwapped;
 
+    private bool _isAnimationPlaying = false;
+
     public enum TrashType
     {
         bolt,
@@ -28,16 +30,25 @@ public class TrashService
         _trashType = trashType;
         _trashController = controller;
         AnimationService.OnAnimationDestroyEndEvent += DestroyObject;
+        AnimationService.OnAnimationStateChangeEvent += SetAnimationPlaying;
+    }
+
+    private void SetAnimationPlaying(bool isPlay)
+    {
+        _isAnimationPlaying = isPlay;
     }
 
     public void OnPointerDown(PointerEventData eventdata)
     {
-        selectedController = _trashController;
+        if (!_isAnimationPlaying)
+        {
+            selectedController = _trashController;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsAbleToSwap())
+        if (IsAbleToSwap() && !_isAnimationPlaying)
         {
             Swap(selectedController);
             selectedController = null;

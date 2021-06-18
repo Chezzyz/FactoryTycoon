@@ -13,19 +13,10 @@ public class Discription : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         discriptionWindow.SetActive(true);
-        isOnCard = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         discriptionWindow.SetActive(false);
-        isOnCard = false;
-    }
-    void Update()
-    {
-        if (isOnCard)
-        {
-            discriptionWindow.transform.position = Input.mousePosition;
-        }
     }
 }

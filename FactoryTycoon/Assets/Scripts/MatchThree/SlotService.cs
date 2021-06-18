@@ -114,13 +114,16 @@ public class SlotService
             }
         }
 
-        foreach (var first in slotControllers)
+        if (slotControllers.Count > 1)
         {
-            foreach (var second in slotControllers)
+            foreach (var first in slotControllers)
             {
-                if (first.posX == second.posX || first.posY == second.posY)
+                foreach (var second in slotControllers)
                 {
-                    return true;
+                    if (first.posX == second.posX || first.posY == second.posY)
+                    {
+                        return true;
+                    }
                 }
             }
         }

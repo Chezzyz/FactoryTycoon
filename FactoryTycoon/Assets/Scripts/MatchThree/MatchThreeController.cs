@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchThreeController : MonoBehaviour
+public class MatchThreeController : MonoBehaviour, ICheckable
 {
     [SerializeField] int fieldSize = 5;
     [SerializeField] int CollectableCount = 3;
@@ -29,16 +29,16 @@ public class MatchThreeController : MonoBehaviour
         animationController.InitService();
     }
 
-    public static bool CheckAnswer()
+    public bool CheckAnswer()
     {
         return collectableCount == 0 ? true : false;
     }
 
-    public static void CheckWin()
-    {
-        if (CheckAnswer())
-        {
-            Debug.Log("Win");
-        }
-    }
+    //public static void CheckWin()
+    //{
+    //    if (CheckAnswer())
+    //    {
+    //        Debug.Log("Win");
+    //    }
+    //}
 }

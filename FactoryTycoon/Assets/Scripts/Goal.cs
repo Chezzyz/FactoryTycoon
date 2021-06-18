@@ -45,6 +45,8 @@ public class Goal : MonoBehaviour
             _button.interactable = false;
 
             if(!lastGoal) nextGoal._button.interactable = true;
+
+            //
         }
     }
 

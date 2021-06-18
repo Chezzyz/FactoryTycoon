@@ -42,7 +42,7 @@ public class FormulaController : MonoBehaviour, ICheckable
         FillSets();
 
         var numCheck = numeratorSet.SetEquals(correctNumeratorSet); //comment!
-        var denumCheck = denumeratorSet.SetEquals(correctDenumeratorSet);
+        var denumCheck = denumeratorSet.SetEquals(correctDenumeratorSet); //comment2!
         var sumCheck = sumSet.SetEquals(correctSumSet);
 
         return numCheck && denumCheck && sumCheck;

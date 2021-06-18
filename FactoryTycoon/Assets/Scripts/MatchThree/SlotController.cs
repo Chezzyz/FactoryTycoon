@@ -33,7 +33,7 @@ public class SlotController : MonoBehaviour
 
     public override string ToString()
     {
-        return $"[{posY},{posX}] {TrashController}";
+        return $"[{posY},{posX}] {TrashController.GetItemType()}";
     }
 
 }
