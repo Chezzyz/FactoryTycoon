@@ -57,10 +57,11 @@ public class Goal : MonoBehaviour
         OnEndGoalEvent?.Invoke(lastGoal);
 
         discription.SetActive(false);
+        nextGoal.discription.SetActive(true);
 
         _button.interactable = false;
-
         if (!lastGoal) nextGoal._button.interactable = true;
+
         ChangeScreenStates();
     }
 

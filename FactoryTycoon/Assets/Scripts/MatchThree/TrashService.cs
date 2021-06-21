@@ -22,7 +22,7 @@ public class TrashService
         screw,
         nail,
         gear,
-        wire
+        //wire
     }
 
     public TrashService(TrashType trashType, TrashController controller)
