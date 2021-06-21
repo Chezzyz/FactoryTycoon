@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
     }
 
     public void MainMenu() 
-        {
+    {
         animator.SetTrigger("LoadScene");
         StartCoroutine(LoadScene("Main"));
     }

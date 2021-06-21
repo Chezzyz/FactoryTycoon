@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private const string CELL_TAG = "Cell";
     private RectTransform _rectTransform;
+    public GameObject _startParent;
     private Vector3 _startPosition;
     private CanvasGroup _canvasGroup;
     private Canvas _canvas;
@@ -20,6 +22,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         _startPosition = _rectTransform.transform.position;
         _canvas = FindObjectOfType<Canvas>();
         _canvasGroup = GetComponent<CanvasGroup>();
+        _startParent = GetComponentInParent<HorizontalLayoutGroup>().gameObject;
     }
 
     public void PutCardOnSlot(CellSlot slot)
@@ -76,9 +79,14 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         {
             IsInCell = false;
             //cellSlot.cardGO.Remove(gameObject);
+            cellSlot.RemoveCard();
             cellSlot = null;
+            CellSlot.OnCardDropFunc();
         }
-        transform.position = _startPosition;
+        //transform.position = _startPosition;
+        transform.SetParent(null);
+        transform.SetParent(_startParent.transform);
+        //transform.localPosition = new Vector3(0, 0, 0);
     }
 
     GameObject PointerRaycast(Vector2 position)

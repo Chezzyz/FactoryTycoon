@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
     {
     }
 
-    private static void SetHelper()
+    public static void SetHelper()
     {
         GameHelper.SetHelperList(HelperTexts.allTexts[GameState.singleton._currentLevel]);
         GameHelper.GetSingleton().ShowHelper();

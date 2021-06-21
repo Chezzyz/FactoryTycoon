@@ -12,7 +12,7 @@ public class CollectableService
 
     private static List<CollectableController> collectables = new List<CollectableController>();
 
-    private static Color collectableColor = new Color(0.45f, 0.8f, 0.45f);
+    private static Color collectableColor = new Color(0.5965201f, 0.990566f, 0.5934051f);
 
     private static Color defaultSlotColor = new Color(0.1886792f, 0.1886792f, 0.1886792f);
 
@@ -51,7 +51,7 @@ public class CollectableService
         _slotControllers[0].slotImage.color = defaultSlotColor;
         _slotControllers[1].slotImage.color = defaultSlotColor;
 
-        MatchThreeController.collectableCount -= 1;
+        MonoBehaviour.FindObjectOfType<MatchThreeController>().Collect(); //Подумать
 
         CreateVFX();
 

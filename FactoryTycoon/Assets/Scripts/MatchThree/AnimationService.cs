@@ -42,7 +42,7 @@ public class AnimationService
 
     public void Fall(IMatchThreeItem item, bool isLast)
     {
-        var animation = item.GetGameObject().transform.DOLocalMove(Vector3.zero, 0.75f).Pause();
+        var animation = item.GetGameObject().transform.DOLocalMove(Vector3.zero, 0.5f).Pause();
 
         animation.SetEase(Ease.Linear);
 

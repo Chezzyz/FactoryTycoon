@@ -23,13 +23,22 @@ public class CellSlot : MonoBehaviour, IDropHandler
             card = eventData.pointerDrag.GetComponent<DragAndDrop>();
             card.PutCardOnSlot(this);
             cardGO = eventData.pointerDrag;
-            OnCardDropEvent?.Invoke();
+            OnCardDropFunc();
         }
         else
         {
             card = eventData.pointerDrag.GetComponent<DragAndDrop>();
             card.ReturnCardToHand();
         }
+    }
+
+    public void RemoveCard()
+    {
+        cardGO = null;
+    }
+    public static void OnCardDropFunc()
+    {
+        OnCardDropEvent?.Invoke();
     }
 
     //Переписать кринж

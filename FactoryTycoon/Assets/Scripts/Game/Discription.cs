@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Discription : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Discription : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] GameObject discriptionWindow;
 
     private bool isOnCard = false;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        discriptionWindow.SetActive(false);
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

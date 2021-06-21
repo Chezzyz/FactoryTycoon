@@ -23,12 +23,12 @@ public class TipMovement : MonoBehaviour
 
     private IEnumerator MoveToPoint()
     {
-        _move = tipImageGO.transform.DOMove(endPoint.transform.position, forwardSpeed);
+        _move = tipImageGO.transform.DOMove(endPoint.transform.position, forwardSpeed).SetEase(Ease.OutQuad);
 
         yield return _move.WaitForCompletion();
         yield return new WaitForSeconds(holdingTime);
 
-        _move = tipImageGO.transform.DOMove(startPoint.transform.position, returnSpeed);
+        _move = tipImageGO.transform.DOMove(startPoint.transform.position, returnSpeed).SetEase(Ease.Linear);
 
         yield return _move.WaitForCompletion();
 
