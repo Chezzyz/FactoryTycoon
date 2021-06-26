@@ -10,6 +10,7 @@ public class GameHelper : MonoBehaviour
     private GameObject _helperImageGO;
     private TextMeshProUGUI _helperText;
     private GameObject _nextButtonGO;
+    [SerializeField] GameObject fixImage;
     private TextMeshProUGUI _nextButtonText => _nextButtonGO.transform.GetComponentInChildren<TextMeshProUGUI>();
     private IReadOnlyList<string> _currentHelperList;
     public int _helperListIndex = 0;
@@ -48,6 +49,7 @@ public class GameHelper : MonoBehaviour
         singleton._helperText.text = singleton._currentHelperList[singleton._helperListIndex];
         singleton._helperImageGO.SetActive(true);
         singleton._nextButtonGO.SetActive(true);
+        singleton.fixImage.SetActive(true);
     }
 
     public void NextTip()//after last text
@@ -85,7 +87,7 @@ public class GameHelper : MonoBehaviour
         {
             // Выкл кнопки "далее", следующая подсказка будет вызвана из КАКОГО-ТО другого места
             singleton._nextButtonGO.SetActive(false);
-
+            singleton.fixImage.SetActive(false); //убрать
             //Порядковый номер элемента паузы в списке, чтобы включить нужную анимацию
             var index = waitIndexesList.IndexOf(singleton._helperListIndex);
 
@@ -98,6 +100,7 @@ public class GameHelper : MonoBehaviour
         else
         {
             singleton._nextButtonGO.SetActive(true);
+            singleton.fixImage.SetActive(true);
         }
     }
 
@@ -114,6 +117,7 @@ public class GameHelper : MonoBehaviour
         singleton.textWindow.SetActive(false);
         singleton._helperText.enabled = false;
         singleton._helperImageGO.SetActive(false);
+        singleton.fixImage.SetActive(false);
         singleton._nextButtonGO.SetActive(false);
         singleton._currentHelperList = null;
         singleton._waitForClose = false;
