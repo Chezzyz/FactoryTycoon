@@ -8,31 +8,30 @@ using static TrashService;
 
 public class GridService
 {
-    private GridController _gridController;
-
-    private GameObject _slotPrefab;
-    private GameObject _slotImage;
-    private GameObject _trashPrefab;
-
-    private static SlotController[,] _slots;
-    private static SlotController[] _spawnSlots;
 
     public const string VERTICAL_LINE = "Vertical";
     public const string HORIZONTAL_LINE = "Horizontal";
 
-    public readonly int fieldSize;
-
-    public delegate void OnAction();
-    public static event OnAction OnActionEvent;
+    public readonly int FieldSize;
 
     public delegate void OnDestroyLines(HashSet<SlotController> slotControllers);
     public static event OnDestroyLines OnDestroyLinesEvent;
 
+    private GridController _gridController;
+
+    private readonly GameObject _slotPrefab;
+    private readonly GameObject _slotImage;
+    private readonly GameObject _trashPrefab;
+
+    private static SlotController[,] s_slots;
+    private static SlotController[] s_spawnSlots;
+
     private int _fallStageIndex; 
+
     public GridService(int fieldSize, GridController controller, GameObject slotPrefab, GameObject trashPrefab, GameObject slotImage)
     {
         _gridController = controller;
-        this.fieldSize = fieldSize;
+        this.FieldSize = fieldSize;
         _slotPrefab = slotPrefab;
         _trashPrefab = trashPrefab;
         _slotImage = slotImage;
@@ -44,26 +43,26 @@ public class GridService
 
     public void CreateGrid()
     {
-        _slots = new SlotController[fieldSize, fieldSize];
-        _spawnSlots = new SlotController[fieldSize];
+        s_slots = new SlotController[FieldSize, FieldSize];
+        s_spawnSlots = new SlotController[FieldSize];
 
         SetLayoutGridColumn(_gridController.gameObject.GetComponent<GridLayoutGroup>());
         SetLayoutGridColumn(_gridController.GridImages.gameObject.GetComponent<GridLayoutGroup>());
 
-        for(int x = 0; x < fieldSize; x++)
+        for(int x = 0; x < FieldSize; x++)
         {
             var spawnSlot = SpawnSlot(x, -1);
             UnityEngine.Object.Instantiate(_slotImage, _gridController.GridImages);
-            _spawnSlots[x] = spawnSlot;
+            s_spawnSlots[x] = spawnSlot;
         }
 
-        for(int y = 0; y < fieldSize; y++)
+        for(int y = 0; y < FieldSize; y++)
         {
-            for (int x = 0; x < fieldSize; x++)
+            for (int x = 0; x < FieldSize; x++)
             {
                 var newSlot = SpawnSlot(x, y);
-                newSlot.slotImage = UnityEngine.Object.Instantiate(_slotImage, _gridController.GridImages).GetComponent<Image>();
-                _slots[y,x] = newSlot;
+                newSlot.SlotImage = UnityEngine.Object.Instantiate(_slotImage, _gridController.GridImages).GetComponent<Image>();
+                s_slots[y,x] = newSlot;
             }
         }
     }
@@ -71,7 +70,7 @@ public class GridService
     private void SetLayoutGridColumn(GridLayoutGroup gridLayoutGroup)
     {
         gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        gridLayoutGroup.constraintCount = fieldSize;
+        gridLayoutGroup.constraintCount = FieldSize;
     }
 
     private SlotController SpawnSlot(int x, int y)
@@ -84,12 +83,12 @@ public class GridService
 
     public void FillGrid()
     {
-        foreach(var slot in _spawnSlots)
+        foreach(var slot in s_spawnSlots)
         {
             SpawnTrash(slot);
         }
 
-        foreach(var slot in _slots)
+        foreach(var slot in s_slots)
         {
             SpawnTrash(slot);
         }
@@ -102,7 +101,7 @@ public class GridService
 
     private void ReFillGrid()
     {
-        foreach (var slot in _slots)
+        foreach (var slot in s_slots)
         {
             UnityEngine.Object.Destroy(slot.TrashController.GetGameObject());
             slot.SetItemController(null);
@@ -112,7 +111,7 @@ public class GridService
 
     private bool IsAbleToTurn()
     {
-        foreach(var slot in _slots)
+        foreach(var slot in s_slots)
         {
             if (slot.IsAbleToMatchBetweenSlots())
             {
@@ -124,9 +123,9 @@ public class GridService
             {
                 foreach (var neighbor in neighbors) 
                 {
-                    if (HaveSlotAt(slot.posX * 2 - neighbor.posX, slot.posX * 2 - neighbor.posY)) //slot + diff between slot and neighbor
+                    if (HaveSlotAt(slot.PosX * 2 - neighbor.PosX, slot.PosX * 2 - neighbor.PosY)) //slot + diff between slot and neighbor
                     { 
-                        var aroundNeighbor = GetSlotByPosition(slot.posX * 2 - neighbor.posX, slot.posX * 2 - neighbor.posY);
+                        var aroundNeighbor = GetSlotByPosition(slot.PosX * 2 - neighbor.PosX, slot.PosX * 2 - neighbor.PosY);
 
                         if(aroundNeighbor.GetNeighborsCountOfType(slot.TrashController.GetItemType()) > 1)
                         {
@@ -164,20 +163,20 @@ public class GridService
         }
         else
         {
-            firstSwapped.Swap(secondSwapped, false);
+            s_FirstSwapped.Swap(s_SecondSwapped, false);
         }
     }
 
     public void LetItemsDown(bool firstTime)
     {
         if (firstTime) _fallStageIndex = 0;
-        if (_fallStageIndex < fieldSize)
+        if (_fallStageIndex < FieldSize)
         {
-            for (int y = fieldSize - 2; y >= 0; y--) //from down to up
+            for (int y = FieldSize - 2; y >= 0; y--) //from down to up
             {
-                for (int x = 0; x < fieldSize; x++) //fall line
+                for (int x = 0; x < FieldSize; x++) //fall line
                 {
-                    _slots[y, x].TrashController?.FallDown();
+                    s_slots[y, x].TrashController?.FallDown();
                 }
             }
 
@@ -191,7 +190,7 @@ public class GridService
     {
         SlotController last = null;
 
-        foreach (var slot in _spawnSlots)
+        foreach (var slot in s_spawnSlots)
         {
             if (slot.TrashController.IsAbleToFall())
             {
@@ -251,7 +250,7 @@ public class GridService
     {
         var destroyList = new HashSet<SlotController>();
 
-        for (int i = 0; i < fieldSize; i++)
+        for (int i = 0; i < FieldSize; i++)
         {
             var horizontalList = GetLineForDestroy(HORIZONTAL_LINE, i);
             var verticalList = GetLineForDestroy(VERTICAL_LINE, i);
@@ -271,7 +270,7 @@ public class GridService
         var lineList = new List<SlotController>();
 
         var isCreatingLine = false;
-        for (int i = 1; i < fieldSize; i++)
+        for (int i = 1; i < FieldSize; i++)
         {
             var currentX = lineType == HORIZONTAL_LINE ? i : lineIndex;
             var currentY = lineType == VERTICAL_LINE ? i : lineIndex;
@@ -309,17 +308,17 @@ public class GridService
             throw new Exception($"There is no slot at {x},{y}");
         }
 
-        return _slots[y, x];
+        return s_slots[y, x];
     }
 
     public bool HaveSlotAt(int x, int y)
     {
-        return !(x < 0 || y < 0 || x >= fieldSize || y >= fieldSize);
+        return !(x < 0 || y < 0 || x >= FieldSize || y >= FieldSize);
     }
 
     public bool HaveItemAt(int x, int y)
     {
         return HaveSlotAt(x, y) &&
-        _slots[y, x].TrashController != null;
+        s_slots[y, x].TrashController != null;
     }
 }

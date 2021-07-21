@@ -3,104 +3,109 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Animator))]
 public class GameHelper : MonoBehaviour
 {
-    [SerializeField] GameObject textWindow;
-    private GameObject _helperImageGO;
+    [SerializeField] private Image ButtonBlock;
+    [SerializeField] private List<TipMovement> Tips;
+    [SerializeField] private List<int> WaitIndexesList;
+
     private TextMeshProUGUI _helperText;
     private GameObject _nextButtonGO;
     private TextMeshProUGUI _nextButtonText => _nextButtonGO.transform.GetComponentInChildren<TextMeshProUGUI>();
     private IReadOnlyList<string> _currentHelperList;
-    public int _helperListIndex = 0;
-    private bool _waitForClose = false;
+    private int _helperListIndex = 0;
+    private bool _readyToClose = false;
+    
+    private Animator _animator;
 
-    private static GameHelper singleton;
+    private static GameHelper Singleton;
 
-    [SerializeField] List<TipMovement> tip;
-    [SerializeField] List<int> waitIndexesList;
     private TipMovement _currentTip;
 
-    public static GameHelper GetSingleton()
+    private void Start()
     {
-        if (!singleton || singleton._currentHelperList == null) throw new System.Exception("HelperList Can't be null, set a list to Helper");
-        singleton._helperImageGO = singleton.transform.GetComponentInChildren<Image>(true).gameObject;
-        singleton._nextButtonGO = singleton.transform.GetComponentInChildren<Button>(true).gameObject;
-        singleton._helperText = singleton.transform.GetComponentInChildren<TextMeshProUGUI>(true);
-        return singleton;
+        _nextButtonGO = transform.GetComponentInChildren<Button>(true).gameObject;
+        _helperText = transform.GetComponentInChildren<TextMeshProUGUI>(true);
+        _animator = GetComponent<Animator>();
+
+        TryShowHelper(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private static void CreateSingleton() 
+    private void TryShowHelper(int buildIndex)
     {
-        if (!singleton) singleton = GameObject.Find("GameHelper").GetComponent<GameHelper>();
+        if (!IsCurrentStageTipsCompleted())
+        {
+            SetHelperList(HelperTexts.allTexts[buildIndex]);
+            ShowHelper();
+        }
     }
     
-    public static void SetHelperList(List<string> list)
+    public void SetHelperList(List<string> list)
     {
-        CreateSingleton();
-        singleton._currentHelperList = list;
+        _currentHelperList = list;
     }
 
     public void ShowHelper()
     {
-        textWindow.SetActive(true);
-        singleton._helperText.enabled = true;
-        singleton._helperText.text = singleton._currentHelperList[singleton._helperListIndex];
-        singleton._helperImageGO.SetActive(true);
-        singleton._nextButtonGO.SetActive(true);
+        _animator.SetTrigger("Awake");
+        _helperText.enabled = true;
+        _helperText.text = _currentHelperList[_helperListIndex];
+        _nextButtonGO.SetActive(true);
     }
 
-    public void NextTip()//after last text
+    public void NextTip()
     {
-        if (_waitForClose)
+        if (_readyToClose || IsCurrentStageTipsCompleted())
         {
             CloseHelper();
             return;
         }
 
-        singleton._helperListIndex += 1;
-        singleton._helperText.text = _currentHelperList[_helperListIndex];
-
-        //if (closeIndexesList.Contains(singleton._helperListIndex))
-        //{
-        //    CloseHelper();
-        //    StopPreviousAnim();
-        //    return;
-        //}
+        _helperListIndex += 1;
+        _helperText.text = _currentHelperList[_helperListIndex];
 
         StopPreviousAnim();
+
         TryPause();
 
-        if (singleton._helperListIndex == singleton._currentHelperList.Count - 1) //last text
+        //Если последняя подсказка
+        if (_helperListIndex == _currentHelperList.Count - 1) 
         {
-            singleton._nextButtonText.text = "Понятно";
-            singleton._waitForClose = true;
+            //Так как последней кнопки может не быть, считаем что подсказки закончились если показана последняя
+            GameState.Singleton.CompleteTipsOfStage(SceneManager.GetActiveScene().buildIndex);
+            _nextButtonText.text = "Понятно";
+            _readyToClose = true;
         }
     }
 
     private void TryPause()
     {
         //Если на этой фразе нужно подождать
-        if (waitIndexesList.Contains(singleton._helperListIndex))
+        if (WaitIndexesList.Contains(_helperListIndex))
         {
             // Выкл кнопки "далее", следующая подсказка будет вызвана из КАКОГО-ТО другого места
-            singleton._nextButtonGO.SetActive(false);
+            _nextButtonGO.SetActive(false);
 
             //Порядковый номер элемента паузы в списке, чтобы включить нужную анимацию
-            var index = waitIndexesList.IndexOf(singleton._helperListIndex);
+            var index = WaitIndexesList.IndexOf(_helperListIndex);
 
-            if (tip[index])
+            if (Tips[index])
             {
-                tip[index].StartTipAnimation();
-                _currentTip = tip[index];
+                Tips[index].StartTipAnimation();
+                _currentTip = Tips[index];
             }
         }
         else
         {
-            singleton._nextButtonGO.SetActive(true);
+            _nextButtonGO.SetActive(true);
+            ButtonBlock.enabled = true;
         }
     }
 
+    //Выключение анимации текущего пальца
     private void StopPreviousAnim()
     {
         if (_currentTip)
@@ -111,12 +116,14 @@ public class GameHelper : MonoBehaviour
 
     private void CloseHelper()
     {
-        singleton.textWindow.SetActive(false);
-        singleton._helperText.enabled = false;
-        singleton._helperImageGO.SetActive(false);
-        singleton._nextButtonGO.SetActive(false);
-        singleton._currentHelperList = null;
-        singleton._waitForClose = false;
-        singleton._helperListIndex = 0;
+        _helperText.enabled = false;
+        _nextButtonGO.SetActive(false);
+        _currentHelperList = null;
+        _readyToClose = false;
+        _helperListIndex = 0;
+        Destroy(this.gameObject);
     }
+
+    private bool IsCurrentStageTipsCompleted() => 
+        GameState.Singleton.IsStageTipsCompleted(GameState.Singleton.GetNameByBuildIndex(SceneManager.GetActiveScene().buildIndex));
 }

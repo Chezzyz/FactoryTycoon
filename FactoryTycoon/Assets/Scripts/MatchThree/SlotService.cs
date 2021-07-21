@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class SlotService 
 {
-    private SlotController _slotController;
-    public int posX { get; private set; }
-    public int posY { get; private set; }
+    private readonly SlotController _slotController;
+    public int PosX { get; private set; }
+    public int PosY { get; private set; }
 
-    public IMatchThreeItem currentItemController { get; private set; }
+    public IMatchThreeItem CurrentItemController { get; private set; }
 
     public SlotService(int x, int y, SlotController controller)
     {
-        posX = x;
-        posY = y;
+        PosX = x;
+        PosY = y;
         _slotController = controller;
     }
 
@@ -23,7 +23,7 @@ public class SlotService
         var curControllerSlot = controller?.GetSlot();
         if(curControllerSlot != _slotController && curControllerSlot != null && deletePrevSlot) curControllerSlot.SetItemController(null); // null previous slot item
 
-        currentItemController = controller;
+        CurrentItemController = controller;
         
         if (controller != null) //change transform of item
         {
@@ -44,7 +44,7 @@ public class SlotService
 
     public bool IsNeighborFor(int x, int y)
     {
-        return Math.Abs(posX - x) + Math.Abs(posY - y) == 1;
+        return Math.Abs(PosX - x) + Math.Abs(PosY - y) == 1;
     }
 
     private bool IsSameTypeWith(int x, int y)
@@ -64,9 +64,9 @@ public class SlotService
         {
             for(int j = -1; j < 2; j++)
             {
-                if (IsSameTypeNeighborWith(posX + i, posY + j)) 
+                if (IsSameTypeNeighborWith(PosX + i, PosY + j)) 
                 {
-                    neighborsList.Add(MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j));
+                    neighborsList.Add(MatchThreeController.gridController.GetSlotByPosition(PosX + i, PosY + j));
                 }
             }
         }
@@ -81,10 +81,10 @@ public class SlotService
         {
             for (int j = -1; j < 2; j++)
             {
-                if (IsNeighborFor(posX + i, posY + j) &&
-                    MatchThreeController.gridController.HaveSlotAt(posX + i, posY + j) &&
-                    MatchThreeController.gridController.HaveItemAt(posX + i, posY + j) &&
-                    MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j).TrashController.GetItemType() == type.ToString())
+                if (IsNeighborFor(PosX + i, PosY + j) &&
+                    MatchThreeController.gridController.HaveSlotAt(PosX + i, PosY + j) &&
+                    MatchThreeController.gridController.HaveItemAt(PosX + i, PosY + j) &&
+                    MatchThreeController.gridController.GetSlotByPosition(PosX + i, PosY + j).TrashController.GetItemType() == type.ToString())
                 {
                         count++;
                     
@@ -103,13 +103,13 @@ public class SlotService
             for (int j = -1; j < 2; j++)
             {
                 if (!(i == 0 && j == 0) &&
-                    !IsNeighborFor(posX + i, posY + j) &&
-                    MatchThreeController.gridController.HaveSlotAt(posX + i, posY + j) &&
-                    MatchThreeController.gridController.HaveItemAt(posX + i, posY + j) &&
-                    MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j)
+                    !IsNeighborFor(PosX + i, PosY + j) &&
+                    MatchThreeController.gridController.HaveSlotAt(PosX + i, PosY + j) &&
+                    MatchThreeController.gridController.HaveItemAt(PosX + i, PosY + j) &&
+                    MatchThreeController.gridController.GetSlotByPosition(PosX + i, PosY + j)
                     .TrashController.GetItemType() == _slotController.TrashController.GetItemType())
                 {
-                    slotControllers.Add(MatchThreeController.gridController.GetSlotByPosition(posX + i, posY + j));
+                    slotControllers.Add(MatchThreeController.gridController.GetSlotByPosition(PosX + i, PosY + j));
                 }
             }
         }
@@ -120,7 +120,7 @@ public class SlotService
             {
                 foreach (var second in slotControllers)
                 {
-                    if (first.posX == second.posX || first.posY == second.posY)
+                    if (first.PosX == second.PosX || first.PosY == second.PosY)
                     {
                         return true;
                     }

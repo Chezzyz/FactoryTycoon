@@ -9,13 +9,15 @@ public class TrashController : MonoBehaviour, IMatchThreeItem, IPointerEnterHand
 {
     public GridController GridController => MatchThreeController.gridController;
 
-    private TrashService _trashService;
-    private TrashView _trashView;
-    public TrashType TrashType => _trashService._trashType;
+    public TrashType TrashType => _trashService.ItemType;
+
     public Image Image => GetComponent<Image>();
+
     public SlotController Slot => GetComponentInParent<SlotController>();
 
-    //public bool selected => _trashService.selected;
+    private TrashService _trashService;
+
+    private TrashView _trashView;
 
     public void InitService(TrashType trashType)
     {

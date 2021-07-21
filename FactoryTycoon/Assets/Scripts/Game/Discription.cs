@@ -8,8 +8,6 @@ public class Discription : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     [SerializeField] GameObject discriptionWindow;
 
-    private bool isOnCard = false;
-
     public void OnPointerClick(PointerEventData eventData)
     {
         discriptionWindow.SetActive(false);

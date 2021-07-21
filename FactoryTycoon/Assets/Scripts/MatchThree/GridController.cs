@@ -13,7 +13,7 @@ public class GridController : MonoBehaviour
 
     private GridService _gridService;
 
-    public int fieldSize => _gridService.fieldSize;
+    public int FieldSize => _gridService.FieldSize;
     
     public void InitService(int fieldSize)
     {

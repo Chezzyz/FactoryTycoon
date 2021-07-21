@@ -35,7 +35,7 @@ public class MatchThreeController : MonoBehaviour, ICheckable
 
     public bool CheckAnswer()
     {
-        return collectableCount == 0 ? true : false;
+        return collectableCount == 0;
     }
 
     public void Collect()

@@ -8,7 +8,6 @@ public class SceneLoader : MonoBehaviour
     private Animator animator;
 
     public delegate void OnLevelEnter(int level);
-    public static event OnLevelEnter OnLevelEnterEvent;
 
     private void Start()
     {
@@ -18,24 +17,22 @@ public class SceneLoader : MonoBehaviour
     public void MainMenu() 
     {
         animator.SetTrigger("LoadScene");
-        StartCoroutine(LoadScene("Main"));
+        StartCoroutine(LoadSceneAfterDelay("Main"));
     }
 
-    public void LoadTable(int index)
+    public void LoadTable(int level)
     {
-        OnLevelEnterEvent?.Invoke(index);
-
         animator.SetTrigger("LoadScene");
-        StartCoroutine(LoadScene("Table" + index));
+        StartCoroutine(LoadSceneAfterDelay("Table" + level));
     }
 
     public void LoadComp(string sceneName)
     {
         //animator.SetTrigger("LoadScene");
-        StartCoroutine(LoadScene(sceneName));
+        StartCoroutine(LoadSceneAfterDelay(sceneName));
     }
 
-    IEnumerator LoadScene(string sceneName)
+    IEnumerator LoadSceneAfterDelay(string sceneName)
     {
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(sceneName);

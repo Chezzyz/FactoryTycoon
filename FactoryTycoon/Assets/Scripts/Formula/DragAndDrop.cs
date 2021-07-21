@@ -65,7 +65,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         var data = PointerRaycast(Input.mousePosition);
 
-        if (data != null && data.tag != CELL_TAG)
+        if (data != null && !data.CompareTag(CELL_TAG))
         {
             ReturnCardToHand();
         }
