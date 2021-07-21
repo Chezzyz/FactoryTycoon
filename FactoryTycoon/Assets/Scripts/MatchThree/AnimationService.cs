@@ -6,14 +6,17 @@ using DG.Tweening;
 
 public class AnimationService
 {
-    private AnimationController _animationController;
     public delegate void OnSwapAnimationEnd();
     public static event OnSwapAnimationEnd OnAnimationSwapEndEvent;
+
     public delegate void OnDestoyAnimationEnd(IMatchThreeItem item);
     public static event OnDestoyAnimationEnd OnAnimationDestroyEndEvent;
+
     public delegate void OnFallAnimationEnd(bool flag);
     public static event OnFallAnimationEnd OnAnimationFallEndEvent;
     public static event OnFallAnimationEnd OnAnimationStateChangeEvent;
+
+    private AnimationController _animationController;
 
     public AnimationService(AnimationController controller)
     {

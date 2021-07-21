@@ -31,8 +31,7 @@ public class TipMovement : MonoBehaviour
         _move = tipImageGO.transform.DOMove(startPoint.transform.position, returnSpeed).SetEase(Ease.Linear);
 
         yield return _move.WaitForCompletion();
-
-
+        
         if (isLoop)
         {
             StartCoroutine(MoveToPoint());

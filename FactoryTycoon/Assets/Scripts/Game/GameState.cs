@@ -1,25 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
-    public static GameState singleton;
+    public static GameState Singleton;
+    public int CurrentLevel {get; private set;}
+
+    private HashSet<string> _completedTips = new HashSet<string>();
+
+    private HashSet<string> _completedStages = new HashSet<string>();
+
+    private Dictionary<int, string> _stageNames = new Dictionary<int, string>()
+    {
+        { 0, "Main" }, {1, "Table1"}, {2, "Table2.1"}, {3, "Table2.2"}, 
+        {4, "Table3"}, {5, "Table4"}, {6, "Table5"}, {7, "Table6"}, 
+        {8, "Table7"}, {9, "Table8"},
+    };
 
     private int _currentGoal = 1;
     private int _currentTable = 1;
 
-    public int _currentLevel = 0;
 
     private void Awake()
     {
-        if (!singleton)
+        if (!Singleton)
         {
-            singleton = this;
+            Singleton = this;
+            CurrentLevel = 0;
         }
-        DontDestroyOnLoad(singleton);
+        DontDestroyOnLoad(Singleton);
 
-        SceneLoader.OnLevelEnterEvent += SetLevelNumber;
+        SceneManager.sceneLoaded += SetLevelNumber;
         Goal.OnEndGoalEvent += OnEndGoal;
     }
 
@@ -44,10 +57,18 @@ public class GameState : MonoBehaviour
         _currentTable++;
     }
 
-    public void SetLevelNumber(int level)
+    public void SetLevelNumber(Scene scene, LoadSceneMode loadSceneMode)
     {
-        _currentLevel = level;
+        CurrentLevel = scene.buildIndex;
     }
+
+    public string GetNameByBuildIndex(int buildIndex) => _stageNames[buildIndex];
+
+    public bool IsStageCompleted(string stage) => _completedStages.Contains(stage);
+
+    public bool IsStageTipsCompleted(string stage) => _completedTips.Contains(stage);
+
+    public void CompleteTipsOfStage(int buildIndex) => _completedTips.Add(GetNameByBuildIndex(buildIndex));
 
     private void OnEndGoal(bool lastGoal)
     {
@@ -57,7 +78,7 @@ public class GameState : MonoBehaviour
         {
             IncrementTableNumber();
             SetGoalNumber(1);
+            _completedStages.Add(GetNameByBuildIndex(CurrentLevel));
         }
     }
-
 }

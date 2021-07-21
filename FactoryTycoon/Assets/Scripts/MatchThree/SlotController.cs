@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class SlotController : MonoBehaviour
 {
-    public int posX => _slotService.posX;
-    public int posY => _slotService.posY;
+    public int PosX => _slotService.PosX;
+    public int PosY => _slotService.PosY;
+
+    public Image SlotImage;
 
     private SlotService _slotService;
 
-    public Image slotImage;
-    public IMatchThreeItem TrashController => _slotService.currentItemController;
-    private GridController _gridController => MatchThreeController.gridController;
+    public IMatchThreeItem TrashController => _slotService.CurrentItemController;
 
     public void InitService(int x, int y)
     {
@@ -33,7 +33,6 @@ public class SlotController : MonoBehaviour
 
     public override string ToString()
     {
-        return $"[{posY},{posX}] {TrashController.GetItemType()}";
+        return $"[{PosY},{PosX}] {TrashController.GetItemType()}";
     }
-
 }

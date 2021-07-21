@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CollectableController
 {
-    private CollectableService _collectableService;
-    public List<SlotController> slotControllers => _collectableService._slotControllers;
+    public List<SlotController> SlotControllers => _collectableService.SlotControllers;
+
     public void SelfDestroy() => _collectableService.SelfDestroy();
 
     public static List<CollectableController> collectableControllers;
@@ -13,6 +13,8 @@ public class CollectableController
     public void SpawnCollectable() => _collectableService.SpawnCollectable();
 
     public static void FillGridWithCollectable(int count) => CollectableService.FillGridWithCollectable(count);
+
+    private CollectableService _collectableService;
 
     public void InitService()
     {

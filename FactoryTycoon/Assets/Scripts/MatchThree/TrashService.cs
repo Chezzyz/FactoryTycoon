@@ -5,16 +5,17 @@ using UnityEngine.EventSystems;
 
 public class TrashService
 {
-    public TrashType _trashType { get; private set; }
+    public TrashType ItemType { get; private set; }
 
-    private TrashController _trashController;
+    public static IMatchThreeItem s_FirstSwapped;
 
-    private static TrashController selectedController;
+    public static IMatchThreeItem s_SecondSwapped;
 
-    public static IMatchThreeItem firstSwapped;
-    public static IMatchThreeItem secondSwapped;
+    private readonly TrashController _trashController;
 
     private bool _isAnimationPlaying = false;
+
+    private static TrashController s_selectedController;
 
     public enum TrashType
     {
@@ -27,7 +28,7 @@ public class TrashService
 
     public TrashService(TrashType trashType, TrashController controller)
     {
-        _trashType = trashType;
+        ItemType = trashType;
         _trashController = controller;
         AnimationService.OnAnimationDestroyEndEvent += DestroyObject;
         AnimationService.OnAnimationStateChangeEvent += SetAnimationPlaying;
@@ -42,7 +43,7 @@ public class TrashService
     {
         if (!_isAnimationPlaying)
         {
-            selectedController = _trashController;
+            s_selectedController = _trashController;
         }
     }
 
@@ -50,8 +51,8 @@ public class TrashService
     {
         if (IsAbleToSwap() && !_isAnimationPlaying)
         {
-            Swap(selectedController);
-            selectedController = null;
+            Swap(s_selectedController);
+            s_selectedController = null;
         }
     }
 
@@ -68,8 +69,8 @@ public class TrashService
         firstSlot.SetItemController(second, false);
         secondSlot.SetItemController(bufFirst, false);
 
-        firstSwapped = _trashController;
-        secondSwapped = second;
+        s_FirstSwapped = _trashController;
+        s_SecondSwapped = second;
 
         MatchThreeController.animationController.Swap(second, bufFirst, sendEvent);
     }
@@ -78,8 +79,8 @@ public class TrashService
     {
         return 
             MouseProperties.isLeftButtonDown &&
-            selectedController != null &&
-            _trashController.Slot.IsNeighborWith(selectedController.Slot.posX, selectedController.Slot.posY);
+            s_selectedController != null &&
+            _trashController.Slot.IsNeighborWith(s_selectedController.Slot.PosX, s_selectedController.Slot.PosY);
     }
 
     public void SelfDestroy()
@@ -99,8 +100,8 @@ public class TrashService
 
     public void FallDown(bool isLast = false)
     {
-        var downSlotX = _trashController.Slot.posX;
-        var downSlotY = _trashController.Slot.posY + 1;
+        var downSlotX = _trashController.Slot.PosX;
+        var downSlotY = _trashController.Slot.PosY + 1;
 
         if (IsAbleToFall())
         {
@@ -113,8 +114,8 @@ public class TrashService
 
     public bool IsAbleToFall()
     {
-        var downSlotX = _trashController.Slot.posX;
-        var downSlotY = _trashController.Slot.posY + 1;
+        var downSlotX = _trashController.Slot.PosX;
+        var downSlotY = _trashController.Slot.PosY + 1;
         return
             MatchThreeController.gridController.HaveSlotAt(downSlotX, downSlotY) &&
            !MatchThreeController.gridController.HaveItemAt(downSlotX, downSlotY);

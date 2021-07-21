@@ -7,7 +7,6 @@ using static AnimationService;
 public class AnimationController : MonoBehaviour
 {
     private AnimationService _animationService;
-    
 
     public void InitService()
     {
