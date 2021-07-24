@@ -53,6 +53,7 @@ public class GameHelper : MonoBehaviour
         _animator.SetTrigger("Awake");
         _helperText.enabled = true;
         _helperText.text = _currentHelperList[_helperListIndex];
+        ButtonBlock.enabled = true;
         _nextButtonGO.SetActive(true);
     }
 
@@ -97,6 +98,8 @@ public class GameHelper : MonoBehaviour
                 Tips[index].StartTipAnimation();
                 _currentTip = Tips[index];
             }
+
+            ButtonBlock.enabled = false;
         }
         else
         {

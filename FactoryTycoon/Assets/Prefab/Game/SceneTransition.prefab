@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1761289484591212103}
   - component: {fileID: 1761289484591212100}
-  - component: {fileID: 1761289484591212101}
+  - component: {fileID: 5014790898199160794}
   m_Layer: 5
   m_Name: SceneTransition
   m_TagString: Untagged
@@ -133,7 +133,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1761289484591212101
+--- !u!114 &5014790898199160794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1547,18 +1547,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   discriptionWindow: {fileID: 1365306686}
---- !u!1 &646887753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1761289484591212102, guid: 6f6532a51e7056d479a566abe1a64d91, type: 3}
+--- !u!114 &646887755 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5014790898199160794, guid: 6f6532a51e7056d479a566abe1a64d91, type: 3}
   m_PrefabInstance: {fileID: 1761289483602164434}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &646887755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646887753}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1782eabe6d9a2e14b84a7336e7474794, type: 3}
@@ -5099,9 +5093,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 2067838679}
     m_Modifications:
     - target: {fileID: 7050077511427510903, guid: c183076cde15a894ab9b13d973b34564, type: 3}
+      propertyPath: Tips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050077511427510903, guid: c183076cde15a894ab9b13d973b34564, type: 3}
+      propertyPath: WaitIndexesList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050077511427510903, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: Tips.Array.data[0]
       value: 
       objectReference: {fileID: 27828960}
+    - target: {fileID: 7050077511427510903, guid: c183076cde15a894ab9b13d973b34564, type: 3}
+      propertyPath: WaitIndexesList.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5156,27 +5162,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7050077511427510904, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_Pivot.x
@@ -5189,6 +5195,10 @@ PrefabInstance:
     - target: {fileID: 7050077511427510905, guid: c183076cde15a894ab9b13d973b34564, type: 3}
       propertyPath: m_Name
       value: GameHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050077512288873850, guid: c183076cde15a894ab9b13d973b34564, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c183076cde15a894ab9b13d973b34564, type: 3}
@@ -5623,6 +5633,5 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1761289484591212101, guid: 6f6532a51e7056d479a566abe1a64d91, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f6532a51e7056d479a566abe1a64d91, type: 3}

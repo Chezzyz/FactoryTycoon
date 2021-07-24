@@ -7,15 +7,15 @@ using System.Linq;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] List<GameObject> checkableObjects;
-    [SerializeField] int table;
-    [SerializeField] bool lastGoal;
-    [SerializeField] GameObject discription;
-    [SerializeField] TextMeshProUGUI goalText;
-    [SerializeField] Goal nextGoal;
-    [SerializeField] List<GameObject> currentScreens;
-    [SerializeField] List<GameObject> nextScreens;
-    [SerializeField] GameObject winWindow;
+    [SerializeField] List<GameObject> CheckableObjects;
+    [SerializeField] int Table;
+    [SerializeField] bool IsLastGoal;
+    [SerializeField] GameObject Discription;
+    [SerializeField] TextMeshProUGUI GoalText;
+    [SerializeField] Goal NextGoal;
+    [SerializeField] GameObject CurrentScreen;
+    [SerializeField] GameObject NextScreen;
+    [SerializeField] GameObject WinWindow;
 
     private Image _checkImage;
     private Button _button => GetComponent<Button>();
@@ -29,7 +29,7 @@ public class Goal : MonoBehaviour
 
     private bool CheckProperty()
     {
-        foreach (var checkableObject in checkableObjects)
+        foreach (var checkableObject in CheckableObjects)
         { 
             ICheckable checkable = checkableObject.GetComponent<ICheckable>();
             if (!checkable.CheckAnswer())
@@ -46,46 +46,40 @@ public class Goal : MonoBehaviour
         {
             //CheckImage = GreenCheckImage
             _checkImage.color = new Color(0.6f, 1f, 0.6f);
-            goalText.color = new Color(0.5f, 0.5f, 0.5f);
-            goalText.fontStyle = FontStyles.Superscript;
-            winWindow.SetActive(true);
+            GoalText.color = new Color(0.5f, 0.5f, 0.5f);
+            GoalText.fontStyle = FontStyles.Superscript;
+            WinWindow.SetActive(true);
         }
     }
 
     public void ToNextGoal()
     {
-        OnEndGoalEvent?.Invoke(lastGoal);
+        OnEndGoalEvent?.Invoke(IsLastGoal);
 
-        discription.SetActive(false);
-        nextGoal.discription.SetActive(true);
+        Discription.SetActive(false);
+        NextGoal.Discription.SetActive(true);
 
         _button.interactable = false;
-        if (!lastGoal) nextGoal._button.interactable = true;
+        if (!IsLastGoal) NextGoal._button.interactable = true;
 
         ChangeScreenStates();
     }
 
     private void ChangeScreenStates()
     {
-        foreach (var screen in currentScreens)
-        {
-            var screenAnimator = screen.GetComponent<Animator>();
+        var screenAnimator = CurrentScreen.GetComponent<Animator>();
 
-            if(screenAnimator)
-            {
-                screenAnimator.SetTrigger("Close");
-            }
+        if(screenAnimator)
+        {
+            screenAnimator.SetTrigger("Close");
         }
+        
+        NextScreen.SetActive(true);
+        screenAnimator = NextScreen.GetComponent<Animator>();
 
-        foreach (var screen in nextScreens)
+        if (screenAnimator)
         {
-            screen.SetActive(true);
-            var screenAnimator = screen.GetComponent<Animator>();
-
-            if (screenAnimator)
-            {
-                screenAnimator.SetTrigger("Open");
-            }
+            screenAnimator.SetTrigger("Open");
         }
     }
 }
