@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CardData : MonoBehaviour
 {
-    public static List<CardData> allCards;
-    public DragAndDrop _dragController => GetComponent<DragAndDrop>();
-    public string _name;
-    private bool isAchieved;
+    public static List<CardData> s_AllCards;
+    public DragAndDrop DragController => GetComponent<DragAndDrop>();
+    public string Name => gameObject.name;
 }

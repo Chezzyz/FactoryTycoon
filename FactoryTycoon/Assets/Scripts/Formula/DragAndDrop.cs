@@ -33,7 +33,7 @@ public class DragAndDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         }
         if(cellSlot == null && slot.cardGO != null)
         {
-            slot.cardData._dragController.ReturnCardToHand();
+            slot.cardData.DragController.ReturnCardToHand();
             slot.cardGO = gameObject;
         }
         transform.position = slot.transform.position;

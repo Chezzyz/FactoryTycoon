@@ -29,7 +29,7 @@ public class FormulaController : MonoBehaviour, ICheckable
 
     private HashSet<string> ConvertListToStringSet(List<CardData> list)
     {
-        HashSet<string> set = new HashSet<string>(list.Select(card => card._name));
+        HashSet<string> set = new HashSet<string>(list.Select(card => card.Name));
         return set;
     }
 
@@ -58,6 +58,6 @@ public class FormulaController : MonoBehaviour, ICheckable
     private void FillSetWithData(List<CellSlot> list, HashSet<string> set)
     {
         var list1 = list.Select(slot => slot.cardData).ToList();
-        var list2 = list1.Select(card => card ? set.Add(card._name) : card).ToList();
+        var list2 = list1.Select(card => card ? set.Add(card.Name) : card).ToList();
     }
 }
