@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tables/Table1.unity
     guid: 84c65217729415948a74d91940e4e6fc
+  - enabled: 1
+    path: Assets/Scenes/Tables/Table2.unity
+    guid: d3df79e4c48f7064d9a0aa76a73fb7f4
+  - enabled: 1
+    path: Assets/Scenes/Tables/Table3.unity
+    guid: 409a032196c19d044871891fd1e8c76a
   - enabled: 0
     path: Assets/Scenes/Test.unity
     guid: 70cb29e98b2a85a4d90a1f0291d0240e

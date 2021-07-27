@@ -73,13 +73,20 @@ public class Goal : MonoBehaviour
         {
             screenAnimator.SetTrigger("Close");
         }
-        
+
+        DisableCurrentScreen();
         NextScreen.SetActive(true);
+
         screenAnimator = NextScreen.GetComponent<Animator>();
 
         if (screenAnimator)
         {
             screenAnimator.SetTrigger("Open");
         }
+    }
+
+    private void DisableCurrentScreen()
+    {
+        CurrentScreen.SetActive(false);
     }
 }

@@ -321,4 +321,10 @@ public class GridService
         return HaveSlotAt(x, y) &&
         s_slots[y, x].TrashController != null;
     }
+
+    public void OnDestroy()
+    {
+        AnimationService.OnAnimationSwapEndEvent -= AfterSwapCheck;
+        AnimationService.OnAnimationFallEndEvent -= LetItemsDown;
+    }
 }

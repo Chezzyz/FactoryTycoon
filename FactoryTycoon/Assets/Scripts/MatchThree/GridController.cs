@@ -30,4 +30,5 @@ public class GridController : MonoBehaviour
 
     public bool HaveItemAt(int x, int y) => _gridService.HaveItemAt(x, y);
 
+    private void OnDestroy() => _gridService.OnDestroy();
 }

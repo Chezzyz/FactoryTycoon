@@ -84,10 +84,10 @@ public class RatioController : MonoBehaviour, ICheckable
 
     private void ChangeMachineCountText(int index, int count)
     {
-        int diff = Math.Abs(count - _machinesCurrentCountStart[index]);
+        int diff = count - _machinesCurrentCountStart[index];
         char sign = Math.Sign(diff) == 1 ? '+' : '-';
 
-        Machines[index].text = $"N {sign} {diff}";
+        Machines[index].text = $"N {sign} {Math.Abs(diff)}";
     }
 
     private void ChangeRatioText(int index, int count) => Ratios[index].text = $"{((float)count / _machinesCount):F2}";

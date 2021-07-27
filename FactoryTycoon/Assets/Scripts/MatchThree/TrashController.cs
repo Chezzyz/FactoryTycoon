@@ -47,4 +47,6 @@ public class TrashController : MonoBehaviour, IMatchThreeItem, IPointerEnterHand
     public void OnPointerDown(PointerEventData eventData) => _trashService.OnPointerDown(eventData);
 
     public void OnPointerEnter(PointerEventData eventData) => _trashService.OnPointerEnter(eventData);
+
+    private void OnDestroy() => _trashService.OnDestroy();
 }

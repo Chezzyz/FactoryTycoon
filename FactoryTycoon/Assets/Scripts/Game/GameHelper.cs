@@ -31,7 +31,12 @@ public class GameHelper : MonoBehaviour
         _helperText = transform.GetComponentInChildren<TextMeshProUGUI>(true);
         _animator = GetComponent<Animator>();
 
-        TryShowHelper(SceneManager.GetActiveScene().buildIndex);
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+
+        if (buildIndex < HelperTexts.allTexts.Count)
+        {
+            TryShowHelper(buildIndex);
+        }
     }
 
     private void TryShowHelper(int buildIndex)

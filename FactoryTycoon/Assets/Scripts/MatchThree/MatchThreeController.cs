@@ -15,7 +15,8 @@ public class MatchThreeController : MonoBehaviour, ICheckable
     public static int collectableCount;
     public static GridController gridController;
     public static AnimationController animationController;
-    void Start()
+
+    void OnEnable()
     {
         gridController = GridController;
         gridController.InitService(fieldSize);
@@ -35,7 +36,17 @@ public class MatchThreeController : MonoBehaviour, ICheckable
 
     public bool CheckAnswer()
     {
-        return collectableCount == 0;
+        if(collectableCount == 0)
+        {
+            Invoke(nameof(DestroyPrefab),2f);
+            return true;
+        }
+        return false; 
+    }
+
+    private void DestroyPrefab()
+    {
+        Destroy(gameObject.transform.parent.gameObject);
     }
 
     public void Collect()

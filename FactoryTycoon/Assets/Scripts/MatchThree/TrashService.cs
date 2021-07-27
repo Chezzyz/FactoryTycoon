@@ -120,4 +120,10 @@ public class TrashService
             MatchThreeController.gridController.HaveSlotAt(downSlotX, downSlotY) &&
            !MatchThreeController.gridController.HaveItemAt(downSlotX, downSlotY);
     }
+
+    public void OnDestroy()
+    {
+        AnimationService.OnAnimationDestroyEndEvent -= DestroyObject;
+        AnimationService.OnAnimationStateChangeEvent -= SetAnimationPlaying;
+    }
 }
