@@ -31,19 +31,19 @@ public class GameHelper : MonoBehaviour
         _helperText = transform.GetComponentInChildren<TextMeshProUGUI>(true);
         _animator = GetComponent<Animator>();
 
-        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        int table = GameState.Singleton.GetTable();
 
-        if (buildIndex < HelperTexts.allTexts.Count)
+        if (HelperTexts.textsDict.ContainsKey(table))
         {
-            TryShowHelper(buildIndex);
+            TryShowHelper(table);
         }
     }
 
-    private void TryShowHelper(int buildIndex)
+    private void TryShowHelper(int table)
     {
         if (!IsCurrentStageTipsCompleted())
         {
-            SetHelperList(HelperTexts.allTexts[buildIndex]);
+            SetHelperList(HelperTexts.textsDict[table]);
             ShowHelper();
         }
     }

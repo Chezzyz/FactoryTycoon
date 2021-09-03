@@ -32,6 +32,11 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadSceneAfterDelay(sceneName));
     }
 
+    public void CloseApplication()
+    {
+        Application.Quit();
+    }
+
     IEnumerator LoadSceneAfterDelay(string sceneName)
     {
         yield return new WaitForSeconds(1.5f);

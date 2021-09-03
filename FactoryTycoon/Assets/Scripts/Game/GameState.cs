@@ -32,7 +32,6 @@ public class GameState : MonoBehaviour
         }
         DontDestroyOnLoad(Singleton);
 
-        SceneManager.sceneLoaded += SetLevelNumber;
         Goal.OnEndGoalEvent += OnEndGoal;
     }
 
@@ -57,9 +56,10 @@ public class GameState : MonoBehaviour
         _currentTable++;
     }
 
-    public void SetLevelNumber(Scene scene, LoadSceneMode loadSceneMode)
+    public int GetTable()
     {
-        CurrentLevel = scene.buildIndex;
+        if (SceneManager.GetActiveScene().buildIndex == 0) return 0;
+        return _currentTable;
     }
 
     public string GetNameByBuildIndex(int buildIndex) => _stageNames[buildIndex];
@@ -76,9 +76,9 @@ public class GameState : MonoBehaviour
 
         if (lastGoal)  //change to new table goals
         {
+            _completedStages.Add(GetNameByBuildIndex(_currentTable));
             IncrementTableNumber();
             SetGoalNumber(1);
-            _completedStages.Add(GetNameByBuildIndex(CurrentLevel));
         }
     }
 }

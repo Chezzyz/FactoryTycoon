@@ -20,5 +20,13 @@ public static class HelperTexts
         "Передвигай элементы так, чтобы они становились в ряд по 3 или больше штуки. После этого они уничтожаются. Если под элементами был фрагмент исходных данных, то ты его получишь. Собери все фрагменты!",
     };
 
-    public static List<List<string>> allTexts = new List<List<string>>() { level_0, level_1 };
+    private static readonly List<string> level_8 = new List<string>()
+    {
+        "Это последний этап, осталось лишь написать отчет, давай сделаем это!",
+        "Отлично, ты получил все нужные значения и теперь знаешь весь процесс расчета цены изделия! Ты большой молодец раз прошел до этого момента, для тебя игры пройдена!"
+    };
+
+    public static List<List<string>> allTexts = new List<List<string>>() { level_0, level_1, level_8 };
+
+    public static Dictionary<int, List<string>> textsDict = new Dictionary<int, List<string>>() { { 0, level_0 }, { 1, level_1 }, { 8, level_8 } };
 }
