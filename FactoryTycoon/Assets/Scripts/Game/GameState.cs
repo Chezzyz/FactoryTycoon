@@ -7,6 +7,7 @@ public class GameState : MonoBehaviour
 {
     public static GameState Singleton;
     public int CurrentLevel {get; private set;}
+    public bool IsLoadedGame { get; private set; }
 
     private HashSet<string> _completedTips = new HashSet<string>();
 
@@ -33,6 +34,12 @@ public class GameState : MonoBehaviour
         DontDestroyOnLoad(Singleton);
 
         Goal.OnEndGoalEvent += OnEndGoal;
+    }
+
+    public void SetLoadedGame(int level)
+    {
+        CurrentLevel = level;
+        IsLoadedGame = true;
     }
 
     public void IncrementGoalNumber()
