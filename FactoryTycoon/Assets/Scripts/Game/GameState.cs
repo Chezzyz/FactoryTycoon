@@ -38,7 +38,7 @@ public class GameState : MonoBehaviour
 
     public void SetLoadedGame(int level)
     {
-        CurrentLevel = level;
+        _currentTable = level;
         IsLoadedGame = true;
     }
 

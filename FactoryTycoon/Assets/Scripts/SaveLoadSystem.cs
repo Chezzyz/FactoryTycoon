@@ -20,7 +20,7 @@ public class SaveLoadSystem : MonoBehaviour
 
             if (buildings != null)
             {
-                for (int i = 0; i < GameState.Singleton.CurrentLevel; i++)
+                for (int i = 0; i < GameState.Singleton.GetTable() - 1; i++)
                 {
                     buildings[i].interactable = false;
                     buildings[i].GetComponent<Outline>().enabled = true;
@@ -51,6 +51,6 @@ public class SaveLoadSystem : MonoBehaviour
 
     private string GenerateSaveCode()
     {
-        return "ehaeifhfuf" + GameState.Singleton.CurrentLevel.ToString();
+        return "ehaeifhfuf" + GameState.Singleton.GetTable().ToString();
     }
 }
