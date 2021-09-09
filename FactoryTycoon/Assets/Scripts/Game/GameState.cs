@@ -21,7 +21,7 @@ public class GameState : MonoBehaviour
     };
 
     private int _currentGoal = 1;
-    private int _currentTable = 1;
+    public int _currentTable = 1; //public for debug
 
 
     private void Awake()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,13 @@ public class SaveLoadSystem : MonoBehaviour
     private GameObject _helper = null;
 
     [SerializeField]
-    private List<Button> buildings = null;
+    private GameObject _warringText = null;
+
+    [SerializeField]
+    private SceneLoader _sceneLoader = null;
+
+    [SerializeField]
+    private List<Button> _buildings = null;
     private void Start()
     {
         if (GameState.Singleton.IsLoadedGame)
@@ -17,13 +24,22 @@ public class SaveLoadSystem : MonoBehaviour
             {
                 Destroy(_helper);
             }
-
-            if (buildings != null)
+        }
+        if (_buildings.Count != 0)
+        {
+            for (int i = 0; i < 8; i++)
             {
-                for (int i = 0; i < GameState.Singleton.GetTable() - 1; i++)
+                if (i < GameState.Singleton.GetTable() - 1)
                 {
-                    buildings[i].interactable = false;
-                    buildings[i].GetComponent<Outline>().enabled = true;
+                    _buildings[i].interactable = false;
+                    _buildings[i].GetComponent<Outline>().enabled = true;
+                    _buildings[i].GetComponent<Outline>().effectColor = new Color(0.3f, 1f, 0.05f);
+                }
+                else if (i > GameState.Singleton.GetTable() - 1)
+                {
+                    _buildings[i].interactable = false;
+                    _buildings[i].GetComponent<Outline>().enabled = true;
+                    _buildings[i].GetComponent<Outline>().effectColor = new Color(1f, 0.05f, 0.05f);
                 }
             }
         }
@@ -32,6 +48,7 @@ public class SaveLoadSystem : MonoBehaviour
     public void LoadGame(InputField ipf)
     {
         int lastDigit = 0;
+        var saveCode = new StringBuilder();
 
         foreach (var word in ipf.text)
         {
@@ -39,9 +56,22 @@ public class SaveLoadSystem : MonoBehaviour
             {
                 lastDigit = int.Parse(word.ToString());
             }
+            else if (char.IsLetter(word))
+            {
+                saveCode.Append(word);
+            }
         }
 
-        GameState.Singleton.SetLoadedGame(lastDigit);
+        if (saveCode.ToString() == "ehaeifhfuf")
+        {
+            _warringText.SetActive(false);
+            GameState.Singleton.SetLoadedGame(lastDigit);
+            _sceneLoader.MainMenu();
+        }
+        else
+        {
+            _warringText.SetActive(true);
+        }
     }
 
     public void ShowGeneratedCode(InputField ipf)
@@ -51,6 +81,18 @@ public class SaveLoadSystem : MonoBehaviour
 
     private string GenerateSaveCode()
     {
-        return "ehaeifhfuf" + GameState.Singleton.GetTable().ToString();
+        var saveCode = new StringBuilder();
+        saveCode.Append("ehaeifhfuf");
+
+        for (int i = 0; i < saveCode.Length; i++)
+        {
+            if (Random.Range(0, 5) == 0)
+            {
+                saveCode.Insert(i, Random.Range(0, 30).ToString());
+            }
+        }
+        saveCode.Append(GameState.Singleton.GetTable().ToString());
+
+        return saveCode.ToString();
     }
 }
