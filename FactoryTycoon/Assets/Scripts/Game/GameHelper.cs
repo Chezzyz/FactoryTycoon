@@ -30,12 +30,18 @@ public class GameHelper : MonoBehaviour
         _nextButtonGO = transform.GetComponentInChildren<Button>(true).gameObject;
         _helperText = transform.GetComponentInChildren<TextMeshProUGUI>(true);
         _animator = GetComponent<Animator>();
-
+        
         int table = GameState.Singleton.GetTable();
+
+        if(SceneManager.GetActiveScene().name == "Main")
+        {
+            table = 0;
+        }
 
         if (HelperTexts.textsDict.ContainsKey(table))
         {
             TryShowHelper(table);
+            HelperTexts.textsDict.Remove(table);
         }
     }
 

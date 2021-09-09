@@ -15,9 +15,9 @@ public class GameState : MonoBehaviour
 
     private Dictionary<int, string> _stageNames = new Dictionary<int, string>()
     {
-        { 0, "Main" }, {1, "Table1"}, {2, "Table2.1"}, {3, "Table2.2"}, 
-        {4, "Table3"}, {5, "Table4"}, {6, "Table5"}, {7, "Table6"}, 
-        {8, "Table7"}, {9, "Table8"},
+        { 0, "Map" }, {1, "Table1"}, {2, "Table2"}, {3, "Table3"}, 
+        {4, "Table4"}, {5, "Table5"}, {6, "Table6"}, {7, "Table7"}, 
+        {8, "Table8"}, {9, "Menu"},
     };
 
     private int _currentGoal = 1;
@@ -65,7 +65,6 @@ public class GameState : MonoBehaviour
 
     public int GetTable()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0) return 0;
         return _currentTable;
     }
 

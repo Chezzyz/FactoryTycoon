@@ -46,7 +46,7 @@ public class BackgroundMove : MonoBehaviour
 
         _bgPosX = _bgTransform.position.x;
 
-        endPosX = -_bgSize * (_backgrounds.Count - 2) - _bgSize / 2;
+        endPosX = -_bgSize * (_backgrounds.Count - 2);
     }
 
     void Update()
@@ -63,7 +63,7 @@ public class BackgroundMove : MonoBehaviour
 
         if (_bgPosX < endPosX)
         {
-            _bgPosX = _bgSize / 2;
+            _bgPosX = _bgSize;
         }
 
         _bgTransform.position = new Vector3(_bgPosX, _bgTransform.position.y, 0);

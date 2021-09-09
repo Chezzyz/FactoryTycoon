@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SaveLoadSystem : MonoBehaviour
 {
+    private const string _secretCode = "ehaeifhfuf";
     [SerializeField]
     private GameObject _helper = null;
 
@@ -33,13 +34,13 @@ public class SaveLoadSystem : MonoBehaviour
                 {
                     _buildings[i].interactable = false;
                     _buildings[i].GetComponent<Outline>().enabled = true;
-                    _buildings[i].GetComponent<Outline>().effectColor = new Color(0.3f, 1f, 0.05f);
+                    _buildings[i].GetComponent<Outline>().effectColor = new Color(0.3f, 1f, 0.05f, 0.75f);
                 }
                 else if (i > GameState.Singleton.GetTable() - 1)
                 {
                     _buildings[i].interactable = false;
                     _buildings[i].GetComponent<Outline>().enabled = true;
-                    _buildings[i].GetComponent<Outline>().effectColor = new Color(1f, 0.05f, 0.05f);
+                    _buildings[i].GetComponent<Outline>().effectColor = new Color(1f, 0.05f, 0.05f, 0.75f);
                 }
             }
         }
@@ -62,7 +63,7 @@ public class SaveLoadSystem : MonoBehaviour
             }
         }
 
-        if (saveCode.ToString() == "ehaeifhfuf")
+        if (saveCode.ToString() == _secretCode && lastDigit > 0 && lastDigit <= 8)
         {
             _warringText.SetActive(false);
             GameState.Singleton.SetLoadedGame(lastDigit);
@@ -82,7 +83,7 @@ public class SaveLoadSystem : MonoBehaviour
     private string GenerateSaveCode()
     {
         var saveCode = new StringBuilder();
-        saveCode.Append("ehaeifhfuf");
+        saveCode.Append(_secretCode);
 
         for (int i = 0; i < saveCode.Length; i++)
         {
